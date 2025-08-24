@@ -1,4 +1,4 @@
 import leafmap
 
 m = leafmap.Map()
-m.to_html('./map.hhtml')
+m.to_html('./map.html')
