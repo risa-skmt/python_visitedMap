@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../static/top.css" />
+    <title>visited_Map</title>
+  </head>
+  <body>
+    <h1>行った場所記録マップ</h1>
+    <form action="/add_place" method="post">
+      スポット名:<input type="text" name="name" id="name" required /> <br />
+      訪問日：<input type="date" name="visited_date" /> <br />
+
+      <!-- 自動でセットしてdbへ送る -->
+      <input type="hidden" id="address" name="address" />
+      <input type="hidden" id="lat" name="lat" />
+      <input type="hidden" id="lon" name="lon" />
+
+      <!-- optionとして住所入力可能 -->
+      <input type="text" name="manual_address" id="manual_address" placeholder="住所を追加" /> <br />
+
+      <button type="submit">登録</button>
+    </form>
+
+    <div id="map"></div>
+
+    <!------------========= PYTHON=======-------- -->
+    <script>
+      let map;
+
+      function initMap() {
+        console.log("initMap呼び出し");
+        const center = { lat: 35.6895, lng: 139.6917 };
+        map = new google.maps.Map(document.getElementById("map"), {
+          zoom: 5,
+          center: center,
+        });
+      }
+
+      // スポット入力の補助
+      function initAutocomplete() {
+        const input = document.getElementById("name");
+        // Autocompleteの初期化
+        const autocomplete = new google.maps.places.Autocomplete(input, {
+          types: ["establishment"],
+        });
+        // 候補が選択された時のイベント
+        autocomplete.addListener("place_changed", function () {
+          // 選択された場所の情報取得
+          const place = autocomplete.getPlace();
+          if (place.geometry) {
+            const address = place.formatted_address || "";
+            const lat = place.geometry.location.lat();
+            const lon = place.geometry.location.lng();
+
+            document.getElementById("address").value = address;
+            document.getElementById("lat").value = lat;
+            document.getElementById("lon").value = lon;
+
+            console.log(name, address, lat, lon);
+            // console.log(place);でGoogleMapAPIから返却されるJSON中身確認可能
+          }
+        });
+      }
+
+      function init() {
+        initMap();
+        initAutocomplete();
+      }
+    </script>
+
+    <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA0krxlluRiX8gMhasTmit8BR8qdjbdWiw&libraries=places&callback=init"></script>
+  </body>
+</html>
