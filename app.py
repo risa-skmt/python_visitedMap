@@ -1,5 +1,9 @@
-from flask import Flask, request, redirect
+from flask import Flask, request, redirect, render_template
 import sqlite3
+import json
+import os from dotenv import load_dotenv
+load_dotenv()
+
 
 app = Flask(__name__)
 DB = 'visitedPlaces.db'
@@ -8,7 +12,7 @@ DB = 'visitedPlaces.db'
 # 初めのDB作成
 def init_db():
     conn = sqlite3.connect(DB)
-    cur = conn.cursor
+    cur = conn.cursor()
     cur.execute('''
     CREATE TABLE IF NOT EXISTS places(
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -49,9 +53,20 @@ def add_place():
 # TOPページ表示用
 @app.route('/')
 def index():
+    api_key = os.getenv('GOOGLE_MAPS_API_KEY')
+
     conn = sqlite3.connect(DB)
     cur = conn.cursor()
     cur.execute('SELECT name, visited_date, address, lat, lon FROM places')
     rows = cur.fetchall()
     conn.close()
+
     print(rows)
+    places = [{'name':r[0], 'visited_date':r[1], 'address':r[2], 'lat':r[3], 'lon':r[4]} for r in rows]
+    # print('jsonチェック',(json.dumps(places, ensure_ascii=False)))
+
+    return render_template('top.html', api_key=api_key , places= places)
+   
+
+if __name__ == "__main__":
+    app.run(debug=True)

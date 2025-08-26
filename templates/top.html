@@ -25,8 +25,12 @@
 
     <div id="map"></div>
 
-    <!------------========= PYTHON=======-------- -->
+    <!------------=========PYTHON=======-------- -->
     <script>
+      // const rows = "{{rows}}";
+      const places = { places };
+      console.log("受取");
+      console.log("場所データの受取", places);
       let map;
 
       function initMap() {
@@ -36,6 +40,22 @@
           zoom: 5,
           center: center,
         });
+
+        console.log(rows);
+        // console.log(places);
+        // console.log(places[0]);
+        // console.log(places[3]);
+        // for (place in places) {
+        //   console.log(place);
+        // }
+
+        // places.forEach((p) => {
+        //   new google.maps.Marker({
+        //     position: { lat: p.lat, lng: p.lon },
+        //     map: map,
+        //     title: p.name,
+        //   });
+        // });
       }
 
       // スポット入力の補助
@@ -70,6 +90,6 @@
       }
     </script>
 
-    <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA0krxlluRiX8gMhasTmit8BR8qdjbdWiw&libraries=places&callback=init"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key={api_key}&libraries=places&callback=init" async defer></script>
   </body>
 </html>
