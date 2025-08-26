@@ -1,5 +1,12 @@
 # python_visitedMap
 
+１．開発作業は[venv\Scripts\activate]で仮想環境に入って行う
+２．ライブラリの追加後は[pip freeze > requirements.txt]で requirements.txt に変更を反映
+３．github への push は以下コマンド
+git add requirements.txt app.py
+git commit -m "update app and requirements"
+git push
+
 <!-- my_travel_app/
 │
 ├─ app.py                # Flaskのメインアプリ

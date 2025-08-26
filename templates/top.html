@@ -27,9 +27,9 @@
 
     <!------------=========PYTHON=======-------- -->
     <script>
-      // const rows = "{{rows}}";
-      const places = { places };
-      console.log("受取");
+      const api_key = "{{ api_key }}";
+
+      const places = JSON.parse('{{ places | safe }}');
       console.log("場所データの受取", places);
       let map;
 
@@ -40,14 +40,6 @@
           zoom: 5,
           center: center,
         });
-
-        console.log(rows);
-        // console.log(places);
-        // console.log(places[0]);
-        // console.log(places[3]);
-        // for (place in places) {
-        //   console.log(place);
-        // }
 
         // places.forEach((p) => {
         //   new google.maps.Marker({
@@ -90,6 +82,6 @@
       }
     </script>
 
-    <script src="https://maps.googleapis.com/maps/api/js?key={api_key}&libraries=places&callback=init" async defer></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key={{api_key}}&libraries=places&callback=init" async defer></script>
   </body>
 </html>
