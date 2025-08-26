@@ -41,13 +41,13 @@
           center: center,
         });
 
-        // places.forEach((p) => {
-        //   new google.maps.Marker({
-        //     position: { lat: p.lat, lng: p.lon },
-        //     map: map,
-        //     title: p.name,
-        //   });
-        // });
+        places.forEach((p) => {
+          new google.maps.Marker({
+            position: { lat: p.lat, lng: p.lon },
+            map: map,
+            title: p.name,
+          });
+        });
       }
 
       // スポット入力の補助
