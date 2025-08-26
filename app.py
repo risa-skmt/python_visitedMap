@@ -1,7 +1,8 @@
 from flask import Flask, request, redirect, render_template
 import sqlite3
 import json
-import os from dotenv import load_dotenv
+from dotenv import load_dotenv
+import os 
 load_dotenv()
 
 
@@ -62,8 +63,8 @@ def index():
     conn.close()
 
     print(rows)
-    places = [{'name':r[0], 'visited_date':r[1], 'address':r[2], 'lat':r[3], 'lon':r[4]} for r in rows]
-    # print('jsonチェック',(json.dumps(places, ensure_ascii=False)))
+    placesData = [{"name":r[0], "visited_date":r[1], "address":r[2], "lat":r[3], "lon":r[4]} for r in rows]
+    places = json.dumps(placesData, ensure_ascii=False)
 
     return render_template('top.html', api_key=api_key , places= places)
    
